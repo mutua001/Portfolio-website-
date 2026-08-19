@@ -16,6 +16,10 @@ const uploadDirectory = path.join(storageRoot, 'images', 'uploads');
 fs.mkdirSync(dataDirectory, { recursive: true });
 fs.mkdirSync(uploadDirectory, { recursive: true });
 
+if (!fs.existsSync(galleryFile)) {
+  fs.copyFileSync(path.join(root, 'data', 'gallery.json'), galleryFile);
+}
+
 const upload = multer({
   storage: multer.diskStorage({
     destination: uploadDirectory,
@@ -39,6 +43,7 @@ app.use(session({
   cookie: { httpOnly: true, sameSite: 'lax', secure: process.env.NODE_ENV === 'production' }
 }));
 app.use(express.static(root));
+app.use('/images/uploads', express.static(uploadDirectory));
 
 function readGallery() {
   return JSON.parse(fs.readFileSync(galleryFile, 'utf8'));
