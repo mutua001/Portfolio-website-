@@ -183,6 +183,87 @@ function updateNavigation() {
         link.classList.remove('text-blue-400');
         if (link.getAttribute('href').slice(1) === current) {
             link.classList.add('text-blue-400');
+
+        // Gallery Photo Upload Handler
+        document.addEventListener('DOMContentLoaded', function() {
+            const galleryInput = document.getElementById('galleryPhotoInput');
+    
+            if (galleryInput) {
+                galleryInput.addEventListener('change', function(event) {
+                    const files = event.target.files;
+                    const galleryGrid = document.querySelector('#gallery .grid');
+            
+                    if (!files || files.length === 0) return;
+            
+                    let uploadedCount = 0;
+            
+                    // Process each selected file
+                    for (let i = 0; i < files.length; i++) {
+                        const file = files[i];
+                
+                        // Validate file type
+                        if (!file.type.startsWith('image/')) {
+                            alert(`${file.name} is not a valid image file. Skipping...`);
+                            continue;
+                        }
+                
+                        // Validate file size (max 5MB)
+                        if (file.size > 5 * 1024 * 1024) {
+                            alert(`${file.name} exceeds 5MB size limit. Skipping...`);
+                            continue;
+                        }
+                
+                        // Read and create gallery item
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            // Create new gallery item
+                            const galleryItem = document.createElement('div');
+                            galleryItem.className = 'group relative h-40 bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg overflow-hidden border border-gray-300 hover:border-blue-500 transition';
+                            galleryItem.style.opacity = '0';
+                            galleryItem.style.animation = 'fadeIn 0.5s ease-in forwards';
+                    
+                            galleryItem.innerHTML = `
+                                <img src="${e.target.result}" alt="Uploaded Photo" class="w-full h-full object-cover">
+                                <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition flex items-end p-3">
+                                    <p class="text-gray-900 text-sm font-semibold opacity-0 group-hover:opacity-100 transition">Uploaded Photo</p>
+                                </div>
+                            `;
+                    
+                            // Add to beginning of gallery
+                            galleryGrid.insertBefore(galleryItem, galleryGrid.firstChild);
+                            uploadedCount++;
+                        };
+                        reader.readAsDataURL(file);
+                    }
+            
+                    // Show success message
+                    setTimeout(() => {
+                        if (uploadedCount > 0) {
+                            alert(`✓ ${uploadedCount} photo(s) added to gallery!`);
+                        }
+                    }, 500);
+            
+                    // Reset input
+                    event.target.value = '';
+                });
+            }
+        });
+
+        // Add fade-in animation style to document
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                    transform: scale(0.9);
+                }
+                to {
+                    opacity: 1;
+                    transform: scale(1);
+                }
+            }
+        `;
+        document.head.appendChild(style);
         }
     });
 }
