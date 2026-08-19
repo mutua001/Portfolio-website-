@@ -3,7 +3,6 @@ function toggleMobileMenu() {
     const mobileMenu = document.getElementById('mobileMenu');
     mobileMenu.classList.toggle('hidden');
 }
-
 // Parallax Scroll Effect for Background Elements
 window.addEventListener('scroll', function() {
     const parallaxElements = document.querySelectorAll('.parallax-element');
