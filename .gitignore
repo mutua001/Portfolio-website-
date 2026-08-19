@@ -1,0 +1,41 @@
+# Portfolio Website - .gitignore
+
+# Operating System Files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# IDE and Editor Files
+.vscode/
+.idea/
+*.code-workspace
+*.sublime-project
+*.sublime-workspace
+
+# Node modules (if using Tailwind CLI setup in future)
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Build output (if using build tools)
+dist/
+build/
+.next/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# OS specific
+*.log
+*.tmp
+
+# You can safely commit these:
+# - index.html
+# - script.js
+# - styles.css
+# - README.md
+# - images/ (once you add your photos)

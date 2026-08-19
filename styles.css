@@ -1,0 +1,249 @@
+/* Custom styles for portfolio website */
+
+/* Smooth scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Remove default scrollbar styling for webkit browsers */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(243, 244, 246, 0.8);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(96, 165, 250, 0.6);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(96, 165, 250, 0.8);
+}
+
+/* Selection styling */
+::selection {
+    background-color: rgba(96, 165, 250, 0.2);
+    color: #1f2937;
+}
+
+/* Custom focus styles for accessibility */
+:focus-visible {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+}
+
+/* Animation for fade-in on scroll */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+/* Responsive text sizes */
+@media (max-width: 640px) {
+    body {
+        font-size: 15px;
+    }
+}
+
+/* Ensure images are responsive */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Ensure proper spacing in lists */
+li {
+    list-style-position: inside;
+}
+
+/* Code block styling */
+code {
+    background-color: rgba(30, 41, 59, 0.8);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9em;
+}
+
+/* Tech Logo Styling */
+.tech-logo {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 16px;
+    background: white;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    border: 2px solid #ddd;
+    transition: all 0.3s ease;
+    cursor: default;
+}
+
+.tech-logo[data-tech="python"] {
+    color: #3776ab;
+    border-color: #3776ab;
+    background: linear-gradient(135deg, #3776ab 0%, #3776ab 100%);
+    color: white;
+}
+
+.tech-logo[data-tech="sql"] {
+    color: #CC2927;
+    border-color: #CC2927;
+    background: linear-gradient(135deg, #CC2927 0%, #CC2927 100%);
+    color: white;
+}
+
+.tech-logo[data-tech="excel"] {
+    color: #217346;
+    border-color: #217346;
+    background: linear-gradient(135deg, #217346 0%, #217346 100%);
+    color: white;
+}
+
+.tech-logo[data-tech="powerbi"] {
+    color: #F2C811;
+    border-color: #F2C811;
+    background: linear-gradient(135deg, #F2C811 0%, #F2C811 100%);
+    color: #000;
+}
+
+.tech-logo[data-tech="tableau"] {
+    color: #E97627;
+    border-color: #E97627;
+    background: linear-gradient(135deg, #E97627 0%, #E97627 100%);
+    color: white;
+}
+
+.tech-logo[data-tech="dbt"] {
+    color: #FF694B;
+    border-color: #FF694B;
+    background: linear-gradient(135deg, #FF694B 0%, #FF694B 100%);
+    color: white;
+}
+
+/* Tech Badge with Colors */
+.tech-badge-colored {
+    display: inline-block;
+    border-radius: 50px;
+    font-weight: 600;
+    border: 2px solid;
+    transition: all 0.3s ease;
+}
+
+.tech-badge-colored:nth-child(1) {
+    color: white;
+    background: linear-gradient(135deg, #FFD500 0%, #FFA500 100%);
+    border-color: #FF8C00;
+}
+
+.tech-badge-colored:nth-child(2) {
+    color: white;
+    background: linear-gradient(135deg, #CC2927 0%, #992222 100%);
+    border-color: #8B1A1A;
+}
+
+.tech-badge-colored:nth-child(3) {
+    color: white;
+    background: linear-gradient(135deg, #3776ab 0%, #2c5aa0 100%);
+    border-color: #1f3a5c;
+}
+
+.tech-badge-colored:nth-child(4) {
+    color: white;
+    background: linear-gradient(135deg, #E97627 0%, #D96426 100%);
+    border-color: #C05522;
+}
+
+.tech-badge-colored:nth-child(5) {
+    color: white;
+    background: linear-gradient(135deg, #F2C811 0%, #E0B800 100%);
+    border-color: #D4A500;
+}
+
+.tech-badge-colored:nth-child(6) {
+    color: white;
+    background: linear-gradient(135deg, #FF694B 0%, #E55840 100%);
+    border-color: #D94835;
+}
+
+/* Parallax Element */
+.parallax-element {
+    will-change: transform;
+    transition: none;
+}
+
+/* Upload Frame */
+#profilePicture {
+    border-radius: 18px;
+}
+
+.group:hover #uploadPrompt {
+    opacity: 0.9;
+}
+
+/* WhatsApp Floating Button */
+.whatsapp-button {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #25D366 0%, #20BA58 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 28px;
+    box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+    transition: all 0.3s ease;
+    z-index: 40;
+    text-decoration: none;
+    border: 3px solid white;
+}
+
+.whatsapp-button:hover {
+    width: 70px;
+    height: 70px;
+    box-shadow: 0 6px 30px rgba(37, 211, 102, 0.6);
+    transform: translateY(-5px);
+}
+
+.whatsapp-button svg {
+    width: 30px;
+    height: 30px;
+}
+
+/* Responsive - hide on small screens and adjust position on mobile */
+@media (max-width: 640px) {
+    .whatsapp-button {
+        bottom: 20px;
+        right: 20px;
+        width: 55px;
+        height: 55px;
+    }
+
+    .whatsapp-button:hover {
+        width: 60px;
+        height: 60px;
+    }
+
+    .whatsapp-button svg {
+        width: 28px;
+        height: 28px;
+    }
+}
