@@ -1,0 +1,10 @@
+[
+  { "src": "images/event-1.jpg", "alt": "Event 1", "caption": "Event Caption" },
+  { "src": "images/event-2.jpg", "alt": "Event 2", "caption": "Event Caption" },
+  { "src": "images/event-3.jpg", "alt": "Event 3", "caption": "Event Caption" },
+  { "src": "images/event-4.jpg", "alt": "Event 4", "caption": "Event Caption" },
+  { "src": "images/event-5.jpg", "alt": "Event 5", "caption": "Event Caption" },
+  { "src": "images/event-6.jpg", "alt": "Event 6", "caption": "Event Caption" },
+  { "src": "images/event-7.jpg", "alt": "Event 7", "caption": "Event Caption" },
+  { "src": "images/event-8.jpg", "alt": "Event 8", "caption": "Event Caption" }
+]

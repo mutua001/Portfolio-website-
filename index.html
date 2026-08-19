@@ -386,7 +386,7 @@
 
             <!-- Add More Projects Note -->
             <div class="mt-12 p-6 bg-blue-50 border border-blue-200 rounded-lg text-center">
-                <p class="text-gray-700 mb-2">💡 <strong>Tip:</strong> To add more projects, simply duplicate a project card and update the image path, title, and GitHub link.</p>
+                <p class="text-gray-700 mb-2">💡 <strong>Tip:</strong> To add more projectsu title, and GitHub link.</p>
                 <p class="text-gray-600 text-sm">Drop your project images in the <code>images/</code> folder (e.g., images/project-4.png)</p>
             </div>
         </div>
@@ -396,17 +396,7 @@
     <section id="gallery" class="py-20">
         <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 class="text-4xl font-bold mb-12 gradient-text text-center">Events & Gallery</h2>
-                        <!-- Upload Photo Section -->
-                        <div class="mb-8 p-6 bg-blue-50 border-2 border-dashed border-blue-300 rounded-lg text-center">
-                            <h3 class="text-xl font-semibold text-blue-600 mb-3">📸 Add Event Photos</h3>
-                            <p class="text-gray-700 mb-4">Upload your event photos to display them in the gallery</p>
-                            <input type="file" id="galleryPhotoInput" accept="image/jpeg,image/png,image/webp" multiple class="hidden">
-                            <button onclick="document.getElementById('galleryPhotoInput').click()" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-semibold">
-                                Choose Photos
-                            </button>
-                            <p class="text-xs text-gray-600 mt-3">Supported formats: JPG, PNG, WebP (Max 5MB each)</p>
-                        </div>
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            <div id="galleryGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 <!-- Event Photo 1 -->
                 <div class="group relative h-40 bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg overflow-hidden border border-gray-300 hover:border-blue-500 transition">
                     <img src="images/event-1.jpg" alt="Event 1" class="w-full h-full object-cover" onerror="this.style.display='none'">

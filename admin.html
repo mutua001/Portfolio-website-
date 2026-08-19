@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio Admin</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-slate-950 text-slate-100">
+  <main class="mx-auto max-w-5xl px-4 py-12">
+    <header class="mb-10 flex items-center justify-between gap-4">
+      <div>
+        <p class="text-sm font-semibold uppercase tracking-widest text-cyan-400">Private area</p>
+        <h1 class="mt-2 text-4xl font-bold">Portfolio Admin</h1>
+      </div>
+      <a href="/" class="text-sm text-slate-300 underline hover:text-white">View portfolio</a>
+    </header>
+
+    <section id="loginPanel" class="mx-auto max-w-md rounded-2xl border border-slate-700 bg-slate-900 p-6 shadow-xl">
+      <h2 class="text-2xl font-semibold">Admin sign in</h2>
+      <p class="mt-2 text-sm text-slate-400">Use the password configured on the server.</p>
+      <form id="loginForm" class="mt-6 space-y-4">
+        <label class="block text-sm font-medium" for="password">Password</label>
+        <input id="password" type="password" required autocomplete="current-password" class="w-full rounded-lg border border-slate-600 bg-slate-800 px-4 py-3 outline-none focus:border-cyan-400">
+        <button class="w-full rounded-lg bg-cyan-500 px-4 py-3 font-semibold text-slate-950 hover:bg-cyan-400" type="submit">Sign in</button>
+        <p id="loginStatus" class="text-sm text-rose-300"></p>
+      </form>
+    </section>
+
+    <section id="dashboardPanel" class="hidden">
+      <div class="mb-6 flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <h2 class="text-2xl font-semibold">Manage gallery</h2>
+          <p class="mt-1 text-sm text-slate-400">Upload up to 20 JPG, PNG, or WebP images at a time. Maximum 5MB each.</p>
+        </div>
+        <button id="logoutButton" class="rounded-lg border border-slate-600 px-4 py-2 text-sm hover:border-cyan-400">Sign out</button>
+      </div>
+
+      <form id="uploadForm" class="rounded-2xl border border-dashed border-cyan-500/60 bg-slate-900 p-6">
+        <input id="photos" name="photos" type="file" accept="image/jpeg,image/png,image/webp" multiple required class="block w-full text-sm text-slate-300 file:mr-4 file:rounded-lg file:border-0 file:bg-cyan-500 file:px-4 file:py-2 file:font-semibold file:text-slate-950 hover:file:bg-cyan-400">
+        <button class="mt-4 rounded-lg bg-cyan-500 px-5 py-3 font-semibold text-slate-950 hover:bg-cyan-400" type="submit">Upload selected images</button>
+        <p id="uploadStatus" class="mt-3 text-sm text-slate-400"></p>
+      </form>
+
+      <div id="galleryList" class="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4"></div>
+    </section>
+  </main>
+
+  <script>
+    const loginPanel = document.getElementById('loginPanel');
+    const dashboardPanel = document.getElementById('dashboardPanel');
+    const loginStatus = document.getElementById('loginStatus');
+    const uploadStatus = document.getElementById('uploadStatus');
+    const galleryList = document.getElementById('galleryList');
+
+    async function request(url, options) {
+      const response = await fetch(url, options);
+      const body = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(body.error || 'Request failed.');
+      return body;
+    }
+
+    function showDashboard() {
+      loginPanel.classList.add('hidden');
+      dashboardPanel.classList.remove('hidden');
+      loadGallery();
+    }
+
+    async function loadGallery() {
+      const gallery = await request('/api/gallery');
+      galleryList.innerHTML = gallery.map(item => `
+        <article class="overflow-hidden rounded-xl border border-slate-700 bg-slate-900">
+          <img src="/${item.src}" alt="${item.alt}" class="h-40 w-full object-cover">
+          <div class="flex items-center justify-between gap-2 p-3">
+            <span class="truncate text-xs text-slate-300">${item.alt}</span>
+            ${item.managed ? `<button data-filename="${item.src.split('/').pop()}" class="delete-button text-xs font-semibold text-rose-300 hover:text-rose-200">Delete</button>` : ''}
+          </div>
+        </article>
+      `).join('');
+    }
+
+    document.getElementById('loginForm').addEventListener('submit', async event => {
+      event.preventDefault();
+      loginStatus.textContent = '';
+      try {
+        await request('/api/admin/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ password: document.getElementById('password').value })
+        });
+        showDashboard();
+      } catch (error) {
+        loginStatus.textContent = error.message;
+      }
+    });
+
+    document.getElementById('uploadForm').addEventListener('submit', async event => {
+      event.preventDefault();
+      uploadStatus.textContent = 'Uploading...';
+      try {
+        const formData = new FormData(event.target);
+        const uploaded = await request('/api/gallery', { method: 'POST', body: formData });
+        uploadStatus.textContent = `${uploaded.length} image(s) uploaded.`;
+        event.target.reset();
+        loadGallery();
+      } catch (error) {
+        uploadStatus.textContent = error.message;
+      }
+    });
+
+    galleryList.addEventListener('click', async event => {
+      if (!event.target.matches('.delete-button')) return;
+      if (!confirm('Delete this uploaded image?')) return;
+      try {
+        await request(`/api/gallery/${encodeURIComponent(event.target.dataset.filename)}`, { method: 'DELETE' });
+        loadGallery();
+      } catch (error) {
+        alert(error.message);
+      }
+    });
+
+    document.getElementById('logoutButton').addEventListener('click', async () => {
+      await request('/api/admin/logout', { method: 'POST' });
+      window.location.reload();
+    });
+
+    request('/api/admin/session').then(session => {
+      if (session.authenticated) showDashboard();
+    });
+  </script>
+</body>
+</html>
