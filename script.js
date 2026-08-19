@@ -185,26 +185,3 @@ function updateNavigation() {
     });
 }
 
-async function loadManagedGallery() {
-    const galleryGrid = document.getElementById('galleryGrid');
-    if (!galleryGrid || window.location.protocol === 'file:') return;
-
-    try {
-        const response = await fetch('/api/gallery');
-        if (!response.ok) return;
-
-        const gallery = await response.json();
-        galleryGrid.innerHTML = gallery.map(item => `
-            <div class="group relative h-40 overflow-hidden rounded-lg border border-gray-300 bg-gradient-to-br from-gray-100 to-gray-200 transition hover:border-blue-500">
-                <img src="/${item.src}" alt="${item.alt}" class="h-full w-full object-cover" onerror="this.style.display='none'">
-                <div class="absolute inset-0 flex items-end bg-black bg-opacity-0 p-3 transition group-hover:bg-opacity-20">
-                    <p class="text-sm font-semibold text-gray-900 opacity-0 transition group-hover:opacity-100">${item.caption}</p>
-                </div>
-            </div>
-        `).join('');
-    } catch (error) {
-        console.warn('Managed gallery unavailable; showing the built-in gallery.', error);
-    }
-}
-
-document.addEventListener('DOMContentLoaded', loadManagedGallery);

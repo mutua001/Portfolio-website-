@@ -239,19 +239,6 @@ The design is optimized for:
 - Check browser console for errors (F12)
 - Implement a backend service (Formspree, EmailJS, etc.)
 
-### Admin Image Dashboard
-
-The project includes a Node.js backend for private gallery management.
-
-1. Install dependencies with `npm.cmd install`.
-2. Copy `.env.example` to `.env` and set a strong `ADMIN_PASSWORD` and `SESSION_SECRET`.
-3. Start the server with `npm.cmd start`.
-4. Open `http://localhost:3000/admin` and sign in.
-
-The dashboard uploads and deletes gallery images, while the public portfolio remains view-only. Uploaded files are stored in `images/uploads/` and the gallery index is stored in `data/gallery.json`.
-
-The current Vercel configuration is for a static deployment. The Node server must run on a Node-capable host with persistent storage, or the upload storage must be moved to a service such as Vercel Blob, Supabase Storage, or Firebase Storage before production deployment.
-
 ## 📄 License
 
 This portfolio template is open-source and free to use. Customize as needed!
